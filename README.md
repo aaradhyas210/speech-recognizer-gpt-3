@@ -1,1 +1,0 @@
-# speech-recognizer-gpt-3
