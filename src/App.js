@@ -14,6 +14,9 @@ mic.continuous = true;
 mic.interimResults = true;
 mic.lang = "en-US";
 
+const BASE_URL =
+	"https://main--visionary-youtiao-038df7.netlify.app/.netlify/functions/api";
+
 function App() {
 	const [isListening, setIsListening] = useState(false);
 	const [note, setNote] = useState("");
@@ -46,17 +49,17 @@ function App() {
 			setNote(transcript);
 			mic.onerror = (event) => {
 				console.log(event.error);
+				setNote("");
 			};
 		};
 	};
 
 	async function askQuestion(prompt) {
 		try {
-			const response = await fetch("http://localhost:8080/completion", {
+			const response = await fetch(BASE_URL + "/completion", {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",
-					Authorization: `Bearer ${process.env.OPENAI_KEY}`,
 				},
 				body: JSON.stringify({
 					prompt: prompt,
